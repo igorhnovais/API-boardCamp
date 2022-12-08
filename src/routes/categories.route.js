@@ -1,6 +1,12 @@
 import {Router} from "express";
 const router = Router();
 
-import { getCategories } from "../controllers/categories.controller.js";
+import { getCategories, postCategories } from "../controllers/categories.controller.js";
 
-router.get("/categories", getCategories)
+import { categoryValidation } from "../middlewares/categoryValidation.middleware.js";
+
+router.get("/categories", getCategories);
+
+router.post("/categories",categoryValidation, postCategories);
+
+export default router;
