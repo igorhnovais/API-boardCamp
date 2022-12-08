@@ -8,7 +8,7 @@ export async function getCategories(req, res){
         res.send(category.rows);
 
     } catch (err){
-        console.log(err);
+        console.log(err.message);
         res.status(500).send('Server not running');
     }
 }
@@ -16,14 +16,13 @@ export async function getCategories(req, res){
 export async function postCategories (req,res){
     const {name} = req.body;
 
-    try{
-        
+    try{ 
         await connection.query("INSERT INTO categories (name) VALUES ($1)", [name]);
 
         res.send(201);
 
     } catch (err){
-        console.log(err);
+        console.log(err.message);
         res.status(500).send('Server not running');
     }
 }
