@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 
 import categoriesRouters from "./routes/categories.route.js";
-import gamesRouters from "./routes/games.route.js"
+import gamesRouters from "./routes/games.route.js";
+import customersRouters from "./routes/customers.route.js"
 
 const app = express();
 app.use(cors());
@@ -10,6 +11,7 @@ app.use(express.json());
 
 app.use(categoriesRouters);
 app.use(gamesRouters);
+app.use(customersRouters);
 
 
 
