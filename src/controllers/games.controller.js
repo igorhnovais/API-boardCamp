@@ -6,12 +6,37 @@ export async function getGames(req,res){
 
     try{
         if(name){
-            const game = await connection.query(`SELECT * FROM games WHERE name ILIKE '${name}%'`);
-            res.send(game.rows);
+            const game = await connection.query(`
+            SELECT 
+                games.id, games.name, games.image, games."stockTotal", games."pricePerDay", 
+                categories.name AS "categoryName"
+            FROM 
+                games 
+            JOIN
+                categories
+            ON
+                games."categoryId"=categories.id          
+            WHERE 
+                name 
+            ILIKE 
+                '${name}%'`
+            );
+
+            return res.send(game.rows);
 
         } else {
-            const game = await connection.query("SELECT * FROM games");
-            res.send(game.rows);
+            const game = await connection.query(`
+            SELECT 
+                games.id, games.name, games.image, games."stockTotal", games."pricePerDay", 
+                categories.name AS "categoryName"
+            FROM 
+                games 
+            JOIN
+                categories
+            ON
+                games."categoryId"=categories.id `
+            );
+            return res.send(game.rows);
         }
 
     } catch (err){

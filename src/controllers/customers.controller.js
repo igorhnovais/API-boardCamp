@@ -2,7 +2,7 @@ import { connection } from "../database/db.js";
 
 export async function getCustomers (req, res){
 
-    const {cpf} = req.query
+    const {cpf} = req.query;
 
     try{
         if(cpf){
