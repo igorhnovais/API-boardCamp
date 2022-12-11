@@ -3,9 +3,9 @@ import { connection } from "../database/db.js";
 
 export async function getGames(req,res){
     const { name } = req.query;
-
+    const nameQuery = name
     try{
-        if(name){
+        if(nameQuery){
             const game = await connection.query(`
             SELECT 
                 games.id, games.name, games.image, games."stockTotal", games."pricePerDay", 
@@ -17,14 +17,15 @@ export async function getGames(req,res){
             ON
                 games."categoryId"=categories.id          
             WHERE 
-                name 
+                games.name 
             ILIKE 
-                '${name}%'`
+                '${nameQuery}%'`
             );
 
             return res.send(game.rows);
 
         } else {
+
             const game = await connection.query(`
             SELECT 
                 games.id, games.name, games.image, games."stockTotal", games."pricePerDay", 

@@ -95,4 +95,35 @@ export async function postRentals (req,res){
         console.log(err.message);
         res.status(500).send('Server not running');
     }
+};
+
+export async function postRentalsFinished (req, res){
+    const {feeDelay, id}  = req.info;
+    const day = dayjs().format("YYYY-MM-DD");
+
+    try{
+        await connection.query('UPDATE rentals SET "returnDate"=$1, "delayFee"=$2 WHERE id=$3;',
+        [day, feeDelay, id]);
+
+        res.sendStatus(201);
+
+    } catch (err){
+        console.log(err.message);
+        res.status(500).send('Server not running');
+    }
+    
+};
+
+export async function deleteRentals(req, res){
+
+    const {id} = req.params;
+
+    try {
+        await connection.query('DELETE FROM rentals WHERE id=$1', [id]);
+        res.sendStatus(200);
+
+    } catch (err){
+        console.log(err.message);
+        res.status(500).send('Server not running');
+    }
 }
