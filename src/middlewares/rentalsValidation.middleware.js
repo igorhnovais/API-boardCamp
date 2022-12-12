@@ -13,24 +13,24 @@ export async function rentalsValidation (req,res, next){
         return res.status(422).send(errors);
     } 
 
-    const customerExist = await connection.query("SELECT * FROM customers WHERE id=$1", 
+    const customerExist = await connection.query("SELECT * FROM customers WHERE id=$1;", 
     [info.customerId]);
 
     if (customerExist.rowCount === 0){
         return res.sendStatus(400);
     }
 
-    const gameExist = await connection.query("SELECT * FROM games WHERE id=$1", 
+    const gameExist = await connection.query("SELECT * FROM games WHERE id=$1;", 
     [info.gameId]);
 
     if(gameExist.rowCount === 0){
         return res.sendStatus(400);
     }
 
-    const gameRentals = await connection.query('SELECT * FROM rentals WHERE "gameId"=$1',
+    const gameRentals = await connection.query('SELECT * FROM rentals WHERE "gameId"=$1;',
     [info.gameId]);
 
-    if(gameRentals === gameExist.rows[0].stockTotal){
+    if(gameRentals.rowCount >= gameExist.rows[0].stockTotal){
         return res.sendStatus(400);
     }
 

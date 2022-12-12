@@ -5,7 +5,6 @@ export async function finishedValidation (req, res, next){
     const {id} = req.params;
     let feeDelay = 0;
 
-    
     try{
         
         const dayRented = await connection.query('SELECT "rentDate", "gameId", "daysRented", "returnDate" FROM rentals WHERE id=$1;', [id])

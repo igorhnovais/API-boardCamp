@@ -29,7 +29,7 @@ export async function GetRentals (req, res){
         JOIN 
             categories 
         ON 
-            categories.id = games."categoryId"
+            categories.id = games."categoryId";
         `
 
     try{
@@ -37,7 +37,7 @@ export async function GetRentals (req, res){
             const data = await connection.query(`
                 ${rentalQuery}
                 WHERE
-                    "customerId"=$1, gameId=$2
+                    "customerId"=$1, gameId=$2;
             `, [customerId, gameId]);
 
            return res.send(data.rows);
@@ -47,7 +47,7 @@ export async function GetRentals (req, res){
             const data = await connection.query(`
                 ${rentalQuery}
                 WHERE
-                    "customerId"=$1
+                    "customerId"=$1;
             `, [customerId]);
 
            return res.send(data.rows);
@@ -57,7 +57,7 @@ export async function GetRentals (req, res){
             const data = await connection.query(`
                 ${rentalQuery}
                 WHERE
-                    "gameId"=$1
+                    "gameId"=$1;
             `, [gameId]);
 
            return res.send(data.rows);
@@ -80,13 +80,13 @@ export async function postRentals (req,res){
     const day = dayjs().format("YYYY-MM-DD");
 
     try{
-        const priceGame = await connection.query('SELECT "pricePerDay" FROM games WHERE id=$1', [gameId]);
+        const priceGame = await connection.query('SELECT "pricePerDay" FROM games WHERE id=$1;', [gameId]);
         const priceId = Number(priceGame.rows[0].pricePerDay) * Number(daysRented);
 
         await connection.query(`
         INSERT INTO 
             rentals ("customerId", "gameId", "daysRented", "returnDate", "delayFee", "originalPrice", "rentDate") 
-        VALUES ($1, $2, $3, $4, $5, $6, $7)`, 
+        VALUES ($1, $2, $3, $4, $5, $6, $7);`, 
         [customerId, gameId, daysRented, null, null, priceId, day]);
 
         res.sendStatus(201);
@@ -119,7 +119,7 @@ export async function deleteRentals(req, res){
     const {id} = req.params;
 
     try {
-        await connection.query('DELETE FROM rentals WHERE id=$1', [id]);
+        await connection.query('DELETE FROM rentals WHERE id=$1;', [id]);
         res.sendStatus(200);
 
     } catch (err){

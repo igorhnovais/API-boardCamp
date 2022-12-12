@@ -3,7 +3,7 @@ import { connection } from "../database/db.js";
 
 export async function getGames(req,res){
     const { name } = req.query;
-    const nameQuery = name
+    const nameQuery = name;
     try{
         if(nameQuery){
             const game = await connection.query(`
@@ -19,7 +19,7 @@ export async function getGames(req,res){
             WHERE 
                 games.name 
             ILIKE 
-                '${nameQuery}%'`
+                '${nameQuery}%';`
             );
 
             return res.send(game.rows);
@@ -35,7 +35,7 @@ export async function getGames(req,res){
             JOIN
                 categories
             ON
-                games."categoryId"=categories.id `
+                games."categoryId"=categories.id ;`
             );
             return res.send(game.rows);
         }
@@ -50,7 +50,7 @@ export async function postGames (req, res){
     const {name, image, stockTotal, categoryId, pricePerDay} = req.info;
 
     try{
-        await connection.query('INSERT INTO games (name, image, "stockTotal", "categoryId", "pricePerDay") VALUES ($1, $2, $3, $4, $5)', 
+        await connection.query('INSERT INTO games (name, image, "stockTotal", "categoryId", "pricePerDay") VALUES ($1, $2, $3, $4, $5);', 
         [name, image, stockTotal, categoryId, pricePerDay])
         res.sendStatus(201);
 

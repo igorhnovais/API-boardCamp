@@ -6,17 +6,24 @@ export async function categoryValidation(req, res, next){
 
     const info = req.body;
 
-    const {error} = categorySchema.validate(info, {abortEarly: false});
+    try{
 
-    if(error){
-        const errors = error.details.map(detail => detail.message);
-        return res.status(422).send(errors);
-    }
+        const {error} = categorySchema.validate(info, {abortEarly: false});
 
-    const categoryExist = await connection.query("SELECT name FROM categories WHERE name=$1", [info.name]);
+        if(error){
+            const errors = error.details.map(detail => detail.message);
+            return res.status(422).send(errors);
+        }
 
-    if (categoryExist.rowCount > 0){
-        return res.sendStatus(409);
+        const categoryExist = await connection.query("SELECT name FROM categories WHERE name=$1;", [info.name]);
+
+        if (categoryExist.rowCount > 0){
+            return res.sendStatus(409);
+        }
+
+    } catch (err){
+        console.log(err.message);
+        res.status(500).send('Server not running');
     }
 
     next();

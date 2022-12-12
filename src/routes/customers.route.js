@@ -7,7 +7,7 @@ import { getCustomers,
     putCustomer} from "../controllers/customers.controller.js";
 
 import { customerValidation } from "../middlewares/customerValidation.middleware.js";
-import { putCustomerValidation } from "../middlewares/putCustomerValidation.middleware.js"
+import { putCustomerValidation } from "../middlewares/putCustomerValidation.middleware.js";
 
 
 router.get("/customers", getCustomers);

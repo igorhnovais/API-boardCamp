@@ -14,7 +14,7 @@ export async function putCustomerValidation (req, res, next){
         return res.status(422).send(errors);
     }  
 
-    const cpfExist = await connection.query("SELECT * FROM customers WHERE cpf=$1 AND id<>$2", 
+    const cpfExist = await connection.query("SELECT * FROM customers WHERE cpf=$1 AND id<>$2;", 
     [info.cpf, id]);
 
     if (cpfExist.rowCount > 0){

@@ -13,6 +13,6 @@ router.post("/rentals", rentalsValidation, postRentals);
 
 router.post("/rentals/:id/return", finishedValidation, postRentalsFinished);
 
-router.delete("/rentals/:id", deleteValidation ,deleteRentals );
+router.delete("/rentals/:id", deleteValidation ,deleteRentals);
 
 export default router;
